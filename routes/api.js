@@ -5,7 +5,7 @@ var sql = require("mssql/msnodesqlv8");
 // config for your database
 var config = {
     driver: "msnodesqlv8",
-    server: "DESKTOP-P331KUC",
+    server: "DESKTOP-0L2Q4H3",
     database: "MCCdb",
     options: {
         trustedConnection: true,
@@ -34,7 +34,7 @@ router.get('/getAllUser', function (req, res) {
 })
 
 router.post('/createNewUser', function (req, res) {
-
+    return res.send({ status: false });
     sql.connect(config, (function (err) {
         if (err) console.log(err);
         try {
@@ -74,6 +74,7 @@ router.post('/createNewUser', function (req, res) {
 })
 
 router.delete('/DeleteUser/:userId?', function (req, res) {
+    return res.send({ status: false });
     sql.connect(config, (function (err) {
         if (err) console.log(err);
         try {
@@ -97,5 +98,47 @@ router.delete('/DeleteUser/:userId?', function (req, res) {
         }
     }));
 })
+
+router.post('/insertMasterCustomer', function (req, res) {
+    return res.send({ status: false });
+    sql.connect(config, (function (err) {
+        if (err) console.log(err);
+        try {
+            var request = new sql.Request();
+            console.log(req.body);
+            let username = req.body['username']
+            let password = req.body['password']
+            let email = req.body['email']
+            let roles = req.body['AsignRoleList']
+            let fullname = req.body['fullname']
+            let accessToken = req.body['AccessToken']
+            let refreshToken = req.body['refreshToken']
+            let pic = req.body['pic']
+            let occupation = req.body['occupation']
+            let companyName = req.body['companyName']
+            let phone = req.body['phone']
+            let address = req.body['address']
+
+            // let query = "insert into tblUser(username,password,email,accessToken,pic,fullname,roles) values ('" + username + "','" + password + "','" + email + "','" + accessToken + "','" + pic + "','" + fullname + "','" + roles + "')";
+            let query = "insert into tblMasterCustomer (UserLoginId,CompanyName,CNIC,City,Country,Email,Address,CellNumber,MobileNumber,AlternateMobileNumber,WebSite,NatureOfBusiness,IsActive,CNICFront,CNICBack,OwnerName,DOB,ActivationDate,DeActivationDate) values (1,'abc',41312106019615,'karachi','pakistan','abc@gmail.com','B-42',09000,2374,234,'','',1,'','','abc','','','')"
+            console.log(query);
+            request.query(query, function (err, recordset) {
+                if (err) {
+                    console.log('error ' + err)
+                    res.send({ status: false });
+                }
+                else {
+                    res.send({ status: true });
+                }
+            });
+
+        } catch (error) {
+            console.log('e: ' + error)
+            res.send({ status: false });
+        }
+    }));
+
+})
+
 
 module.exports = router;

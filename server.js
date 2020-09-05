@@ -1,10 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 const APIPage = require("./routes/api")
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
+app.use(cors({ origin: "*" }));
+// app.use(express.static('public'));      //folder become public
+
 app.use("/api", APIPage);
 
 console.log('Welcom to node.js BackEnd')
@@ -22,8 +26,9 @@ function normalizePort(val) {
 console.log('Welcom to node.js BackEnd')
 
 // console.log(process.env.USERNAME)
-var port = normalizePort(process.env.PORT || '4500')
-var ipAddress = '10.0.0.239';    // IP Address
+var port = normalizePort(process.env.PORT || '4300')
+// var ipAddress = '10.0.0.239';    // IP Address office
+var ipAddress = '192.168.1.141'     // IP Address Home
 
 app.listen(port, ipAddress, function (err) {
     if (err) {
