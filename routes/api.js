@@ -6,7 +6,7 @@ var sql = require("mssql/msnodesqlv8");
 var config = {
     driver: "msnodesqlv8",
     server: "DESKTOP-0L2Q4H3",
-    database: "MCCdb",
+    database: "ortemPosSolutions",
     options: {
         trustedConnection: true,
         useUTC: true
@@ -139,6 +139,48 @@ router.post('/insertMasterCustomer', function (req, res) {
     }));
 
 })
+
+router.get('/getMasterCustomer', function (req, res) {
+    sql.connect(config, function (err) {
+        if (err) throw err;
+        var request = new sql.Request();
+        request.query("select * from tblMasterCustomer", function (err, recordset) {
+            if (err) {
+                console.log('error' + err)
+                return res.status(400).send({ status: false })
+            }
+            else {
+                return res.status(200).send(JSON.stringify(recordset['recordset']));
+            }
+        });
+    });
+})
+
+// http://192.168.1.103:4300/DeleteMasterCustomer/tblMasterCustomerId=9
+router.delete('/DeleteMasterCustomer/:tblMasterCustomerId?', function (req, res) {
+    sql.connect(config, (function (err) {
+        if (err) console.log(err);
+        try {
+            var request = new sql.Request();
+            console.log(req.body);
+            let query = 'delete from tblMasterCustomer where ' + req.params.tblMasterCustomerId
+            request.query(query, function (err, recordset) {
+                if (err) {
+                    console.log('error ' + err)
+                    return res.send({ status: false });
+                }
+                else {
+                    return res.send({ status: true });
+                }
+            });
+
+        } catch (error) {
+            console.log('e: ' + error)
+            return res.send({ status: false });
+        }
+    }));
+})
+
 
 
 module.exports = router;
