@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const APIPage = require("./routes/api")
+
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -26,14 +27,15 @@ function normalizePort(val) {
 console.log('Welcom to node.js BackEnd')
 
 // console.log(process.env.USERNAME)
-var port = normalizePort(process.env.PORT || '4300')
-// var ipAddress = '10.0.0.239';    // IP Address office
-var ipAddress = '192.168.1.141'     // IP Address Home
+// var port = normalizePort(process.env.PORT || '4300')
+let port = process.env.PORT || 3000
 
-app.listen(port, ipAddress, function (err) {
+// var ipAddress = '192.168.1.141'     // IP Address Home
+
+app.listen(port, function (err) {
     if (err) {
         console.log(err);
     } else {
-        console.log("listen: " + ipAddress + ':' + port);
+        console.log(`listen: http://localhost:${port} `);
     }
 })

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 var sql = require("mssql/msnodesqlv8");
+const importData = require("../data.json")
 
 // config for your database
 var config = {
@@ -15,6 +16,10 @@ var config = {
 
 router.get('/testnodeapi', function (req, res) {
     res.send('Node server live now...');
+});
+
+router.get('/getDemoData', function (req, res) {
+    res.send(importData);
 });
 
 router.get('/getAllUser', function (req, res) {
