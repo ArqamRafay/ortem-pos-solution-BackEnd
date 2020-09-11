@@ -4,3 +4,12 @@
 // 404 — NOT FOUND, The requested resource could not be found
 // 400 —BAD REQUEST, The request was malformed or invalid
 // 500 — INTERNAL SERVER ERROR, Unknown server error has occurred
+
+
+- heroku login
+- New-Item Procfile (Write: web: node index.js)
+- heroku create ortemposSolution
+- git add .
+- git commit -m ''
+- git push heroku master
+
